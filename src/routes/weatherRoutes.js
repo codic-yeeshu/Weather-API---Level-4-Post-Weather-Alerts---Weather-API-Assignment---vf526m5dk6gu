@@ -40,7 +40,7 @@ router.post("/alerts", async (req, res) => {
   const { city, date, humidity } = req.body;
   try {
     await weatherController.saveWeatherAlert({ city, date, humidity });
-    return res.status(201).json({
+    return res.status(200).json({
       status: "success",
       message: "Weather alert saved successfully",
     });
