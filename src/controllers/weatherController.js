@@ -1,8 +1,8 @@
-const fs = require('fs');
+const fs = require("fs");
 
 async function getDataFromDatabase() {
   return new Promise((resolve, reject) => {
-    fs.readFile('src/data/data.json', (err, data) => {
+    fs.readFile("src/data/data.json", (err, data) => {
       if (err) {
         reject(err);
       } else {
@@ -15,7 +15,7 @@ async function getDataFromDatabase() {
 async function saveDataToDatabase(data) {
   return new Promise((resolve, reject) => {
     const jsonData = JSON.stringify(data);
-    fs.writeFile('src/data/data.json', jsonData, (err) => {
+    fs.writeFile("src/data/data.json", jsonData, (err) => {
       if (err) {
         reject(err);
       } else {
@@ -42,13 +42,20 @@ async function saveDataToDatabase(data) {
     - Write the data to the 'data.json' file using saveDataToDatabase().    
 */
 
-
-
 // Level 4: Post Weather Alerts
 async function saveWeatherAlert(alertDetails) {
-   // TODO: Implement this function
+  // TODO: Implement this function
+  const prevData = await getDataFromDatabase();
+
+  const newData = [...prevData, alertDetails];
+  try {
+    await saveDataToDatabase(newData);
+  } catch (error) {
+    console.error(error);
+    throw new Error("Failed to save weather alert");
+  }
 }
 
 module.exports = {
-  saveWeatherAlert
+  saveWeatherAlert,
 };
